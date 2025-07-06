@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Recuerdos Especiales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #b90028;
+            --secondary: #f55353;
+            --dark: #1a1a1a;
+            --light: #f0f0f0;
+            --accent: #c20f0f;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #121212 0%, #2a2a2a 100%);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .heart-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+            background-size: 200px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        .couple-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            object-fit: cover;
+            margin: 1.5rem auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        nav {
+            background-color: #000;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0.8rem;
+        }
+        
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #ddd;
+            padding: 0.7rem 1.6rem;
+            margin: 0.3rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-btn i {
+            margin-right: 0.6rem;
+            font-size: 1.2rem;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(255, 107, 139, 0.664);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .video-card {
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid #333;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+            overflow: hidden;
+        }
+        
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+        
+        .play-icon i {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-left: 4px;
+        }
+        
+        .video-card:hover .play-icon {
+            background: rgba(255, 255, 255, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .video-info {
+            padding: 1.3rem;
+        }
+        
+        .video-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+        
+        .video-date {
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+        
+        .video-date i {
+            margin-right: 0.5rem;
+        }
+        
+        .video-description {
+            color: #aaa;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        .memory-counter {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            overflow: auto;
+        }
+        
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            margin: 3% auto;
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.7);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 0, 0, 0.7);
+        }
+        
+        .video-details {
+            padding: 1.5rem;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        
+        .video-details h3 {
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #bbb;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .video-full-description {
+            line-height: 1.6;
+            color: #ccc;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            color: #aaa;
+            margin-top: 3rem;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-heart {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin: 0 0.3rem;
+            animation: heartbeat 1.2s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.2); }
+            10% { transform: scale(1.1); }
+            15% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        .footer-signature {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+        
+        .empty-section {
+            text-align: center;
+            padding: 3rem;
+            color: #777;
+            font-style: italic;
+            border: 2px dashed #444;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .subtitle { font-size: 1.1rem; }
+            .section-title { font-size: 1.6rem; }
+            .video-grid { grid-template-columns: 1fr; }
+            .nav-container { padding: 0.6rem; }
+            .nav-btn { 
+                padding: 0.6rem 1.2rem; 
+                font-size: 0.95rem;
+                margin: 0.2rem;
+            }
+            .header-content {
+                padding: 2rem 1rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .video-section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="heart-bg"></div>
+        <div class="header-content">
+            <h1>Nuestros Recuerdos</h1>
+            <p class="subtitle">Un lugar especial para revivir cada momento que hemos compartido juntos</p>
+            <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80" alt="Nosotros" class="couple-photo">
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <button class="nav-btn active" data-section="peliculas">
+                <i class="fas fa-film"></i> Películas
+            </button>
+            <button class="nav-btn" data-section="viajes">
+                <i class="fas fa-plane"></i> Viajes
+            </button>
+            <button class="nav-btn" data-section="salidas">
+                <i class="fas fa-glass-cheers"></i> Salidas
+            </button>
+            <button class="nav-btn" data-section="especiales">
+                <i class="fas fa-heart"></i> Momentos Especiales
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <section id="peliculas" class="video-section">
+            <h2 class="section-title"><i class="fas fa-film"></i> Nuestras Películas</h2>
+            <div class="video-grid">
+                <div class="video-card" data-video="https://drive.google.com/file/d/1XYjO4nEQsOmuARgmYNi5fCxoTbJ1WpK4/preview" 
+                     data-title="Thunderbolts* (the new avengers)" 
+                     data-date="30 de Abril 2025" 
+                     data-description="La primera vez que cocinamos juntos y vimos esa película que tanto te gusta...">
+                    <div class="video-thumbnail">
+                        <img src="https://m.media-amazon.com/images/M/MV5BYWE2NmNmYTItZGY0ZC00MmY2LTk1NDAtMGUyMGEzMjcxNWM0XkEyXkFqcGc@._V1_.jpg" alt="Películas">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Thunderbolts* (the new avengers)</h3>
+                        <div class="video-date">
+                            <i class="far fa-calendar"></i>30 de Abril 2025
+                        </div>
+                        <p class="video-description">En Malasia, Yelena Belova destruye un laboratorio por encargo de la directora de la CIA, Valentina Allegra de Fontaine, 
+                            para ocultar su participación en el proyecto superhumano "Sentry" del Grupo O.X.E. Mientras De Fontaine se enfrenta a un juicio político inminente por su 
+                            trabajo con el Grupo O.X.E., envía a Yelena, John Walker, Ava Starr y Taskmaster a una instalación secreta de O.X.E. bajo el pretexto de una misión...
+                        </p>
+                        <span class="memory-counter">7.4 / 10 </span>
+                    </div>
+                </div>
+                
+                <div class="video-card" data-video="https://drive.google.com/file/d/4JKL012MNO345PQR/preview" 
+                     data-title="Tarde de Series" 
+                     data-date="15 Marzo 2023" 
+                     data-description="Cuando descubrimos esa serie que nos encantó a ambos...">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1608889476518-738c9b1dcb40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450&q=80" alt="Series">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Tarde de Series</h3>
+                        <div class="video-date">
+                            <i class="far fa-calendar"></i> 15 Marzo 2023
+                        </div>
+                        <p class="video-description">Cuando descubrimos esa serie que nos encantó a ambos...</p>
+                        <span class="memory-counter">5 recuerdos</span>
+                    </div>
+                </div>
+                
+                <div class="video-card" data-video="https://drive.google.com/file/d/4JKL012MNO345PQR/preview" 
+                     data-title="Maratón de Películas" 
+                     data-date="10 Mayo 2023" 
+                     data-description="Ese fin de semana que vimos 5 películas seguidas...">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450&q=80" alt="Maratón">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Maratón de Películas</h3>
+                        <div class="video-date">
+                            <i class="far fa-calendar"></i> 10 Mayo 2023
+                        </div>
+                        <p class="video-description">Ese fin de semana que vimos 5 películas seguidas...</p>
+                        <span class="memory-counter">9 recuerdos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="viajes" class="video-section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-plane"></i> Aquí irán nuestros viajes en el futuro (por ahora son solo ideas)</h2>
+            
+            <div class="video-grid">
+                <div class="video-card" data-video="https://drive.google.com/file/d/1ABC123XYZ456DEF/preview" 
+                     data-title="Que te parece un viaje a la Playa?" 
+                     data-date="15 Julio 2026" 
+                     data-description="Solo para poderte besar con la salida del sol.">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450&q=80" alt="Playa">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Que te parece un viaje a la Playa?</h3>
+                        <div class="video-date">
+                            <i class="far fa-calendar"></i> 15 Julio 2026?
+                        </div>
+                        <p class="video-description">Solo para poderte besar con la salida del sol...</p>
+                        <span class="memory-counter">8 recuerdos</span>
+                    </div>
+                </div>
+                
+                <div class="video-card" data-video="https://drive.google.com/file/d/2DEF456XYZ789ABC/preview" 
+                     data-title="Fin de Semana en la Montaña" 
+                     data-date="22 Agosto 2026" 
+                     data-description="Salir y tener una caminata bajo las estrellas bien mágica...">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450&q=80" alt="Montaña">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Que te parece un viaje a un pueblito magico?</h3>
+                        <div class="video-date">
+                            <i class="far fa-calendar"></i> 22 Agosto 2026?
+                        </div>
+                        <p class="video-description">Salir y tener una caminata bajo las estrellas bien mágica...</p>
+                        <span class="memory-counter">12 recuerdos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="salidas" class="video-section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-glass-cheers"></i> Nuestras Salidas a futuro</h2>
+            <div class="video-grid">
+                <div class="video-card" data-video="https://drive.google.com/file/d/3GHI789JKL012MNO/preview" 
+                     data-title="Nuestro Aniversario" 
+                     data-date="02 julio 2025" 
+                     data-description="Celebrando nuestro primer año juntos">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=450&q=80" alt="Aniversario">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Nuestro Aniversario</h3>
+                        <div class="video-date">
+                            <i class="far fa-calendar"></i> 02 julio 2025
+                        </div>
+                        <p class="video-description">Celebrando nuestro primer año juntos</p>
+                        <span class="memory-counter">10 recuerdos</span>
+                    </div>
+                </div>
+                
+                <div class="empty-section">
+                    <i class="fas fa-plus-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <h3>Pronto tendremos más momentos aquí</h3>
+                    <p>Estamos creando recuerdos para llenar esta sección</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="especiales" class="video-section" style="display: none;">
+            <h2 class="section-title"><i class="fas fa-heart"></i> Momentos Especiales</h2>
+            <div class="empty-section">
+                <i class="fas fa-heart" style="font-size: 3rem; margin-bottom: 1rem; color: var(--primary);"></i>
+                <h3>Esta sección está reservada para momentos únicos</h3>
+                <p>Cada día creamos nuevos recuerdos que pronto estarán aquí</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para ver videos -->
+    <div id="video-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="video-container">
+                <iframe id="video-iframe" src="" allowfullscreen></iframe>
+            </div>
+            <div class="video-details">
+                <h3 id="video-modal-title"></h3>
+                <div class="video-meta">
+                    <span id="video-modal-date"></span>
+                </div>
+                <p id="video-modal-description" class="video-full-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Mi <span class="footer-heart">❤</span> late solo para ti</p>
+        <p class="footer-signature">Cada momento a tu lado me hace sentir vivo</p>
+    </footer>
+
+    <script>
+        // Navegación entre secciones
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Actualizar botones activos
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Ocultar todas las secciones
+                document.querySelectorAll('.video-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // Mostrar la sección seleccionada
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).style.display = 'block';
+                
+                // Desplazarse suavemente al inicio de la sección
+                document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+        
+        // Modal de video
+        const modal = document.getElementById('video-modal');
+        const videoIframe = document.getElementById('video-iframe');
+        const videoTitle = document.getElementById('video-modal-title');
+        const videoDate = document.getElementById('video-modal-date');
+        const videoDescription = document.getElementById('video-modal-description');
+        const closeBtn = document.querySelector('.close-btn');
+        
+        // Abrir modal
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const videoUrl = this.getAttribute('data-video');
+                const title = this.getAttribute('data-title');
+                const date = this.getAttribute('data-date');
+                const description = this.getAttribute('data-description');
+                
+                videoIframe.src = videoUrl;
+                videoTitle.textContent = title;
+                videoDate.textContent = date;
+                videoDescription.textContent = description;
+                
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Cerrar modal
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            videoIframe.src = '';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Cerrar al hacer clic fuera del modal
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                videoIframe.src = '';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Cerrar con la tecla Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape" && modal.style.display === 'block') {
+                modal.style.display = 'none';
+                videoIframe.src = '';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Carga inicial - solo mostrar la sección de películas
+        document.querySelectorAll('.video-section').forEach(section => {
+            if (section.id !== 'peliculas') {
+                section.style.display = 'none';
+            }
+        });
+        
+        // Asegurar que el botón de películas está activo al inicio
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            if (btn.getAttribute('data-section') === 'peliculas') {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
